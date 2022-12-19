@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/apple.png</file>
+        <file>resources/biting.wav</file>
+    </qresource>
+</RCC>

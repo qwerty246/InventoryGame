@@ -1,0 +1,5 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+<file alias="biting.wav">/home/seven/projects/QtProject/test/biting.wav</file>
+</qresource>
+</RCC>
