@@ -5,10 +5,10 @@
 
 Window::Window(QWidget* pParent):
     QMainWindow(pParent),
-    _pInventoryView(new InventoryView(this)),
+    _pAppleLabel(new AppleLabel(this)),
+    _pInventoryView(new InventoryView(_pAppleLabel->GetLabelSize(), this)),
     _pInventoryTable(_pInventoryView->GetInventoryRow(), _pInventoryView->GetInventoryRow(),
                      _pInventoryView->GetTypeRole(), _pInventoryView->GetCountRole(), this),
-    _pAppleLabel(new AppleLabel(this)),
     _pButtonMainMenu(new QPushButton("Main menu", this)),
     _pMainMenu(Q_NULLPTR)
 {

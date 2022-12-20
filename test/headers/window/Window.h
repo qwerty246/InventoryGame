@@ -26,9 +26,9 @@ private slots:
     //INFO Слот завершает работу приложения
     void Exit();
 private:
+    AppleLabel* _pAppleLabel;
     InventoryView* _pInventoryView;
     InventoryTable _pInventoryTable;
-    AppleLabel* _pAppleLabel;
     QPushButton* _pButtonMainMenu;
     MainMenu* _pMainMenu;
     QWidget* _pWidget;

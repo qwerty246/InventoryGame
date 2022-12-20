@@ -6,7 +6,7 @@
 class InventoryView : public QTableView
 {
 public:
-    InventoryView(QWidget* pParent = Q_NULLPTR);
+    InventoryView(int labelSize, QWidget* pParent = Q_NULLPTR);
     virtual ~InventoryView() Q_DECL_EQ_DEFAULT;
 public:
     int GetInventoryRow() const;
@@ -33,6 +33,7 @@ private:
     virtual void startDrag(Qt::DropActions supportedActions) Q_DECL_FINAL;
 private:
     QModelIndex _draggingModel;
+    const int _labelSize;
     const int _inventoryRow;
     const int _inventoryColumn;
     const int _typeRole;

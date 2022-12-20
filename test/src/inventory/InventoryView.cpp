@@ -9,15 +9,16 @@
 #include <QMouseEvent>
 #include <QtMultimedia/QMediaPlayer>
 
-InventoryView::InventoryView(QWidget* pParent) :
+InventoryView::InventoryView(int labelSize, QWidget* pParent) :
     QTableView(pParent),
+    _labelSize(labelSize),
     _inventoryRow(3),
     _inventoryColumn(3),
     _typeRole(Qt::UserRole + 1),
     _countRole(_typeRole + 1)
 {
-    horizontalHeader()->setDefaultSectionSize(AppleLabel::LABEL_SIZE);
-    verticalHeader()->setDefaultSectionSize(AppleLabel::LABEL_SIZE);
+    horizontalHeader()->setDefaultSectionSize(_labelSize);
+    verticalHeader()->setDefaultSectionSize(_labelSize);
 
     horizontalHeader()->hide();
     verticalHeader()->hide();
@@ -27,8 +28,8 @@ InventoryView::InventoryView(QWidget* pParent) :
     setDragEnabled(true);
     setAcceptDrops(true);
 
-    setFixedSize(AppleLabel::LABEL_SIZE * _inventoryRow,
-                 AppleLabel::LABEL_SIZE * _inventoryColumn);
+    setFixedSize(_labelSize * _inventoryRow,
+                 _labelSize * _inventoryColumn);
 
     setFrameShape(QFrame::NoFrame);
 }

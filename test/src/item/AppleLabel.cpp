@@ -12,8 +12,13 @@ AppleLabel::AppleLabel(QWidget* pParent) :
     _labelSize(128),
     _dragPosition()
 {
-    setFixedSize(QSize(LABEL_SIZE, LABEL_SIZE));
+    setFixedSize(QSize(_labelSize, _labelSize));
     setPixmap(AppleImage::GetImage(_type));
+}
+
+int AppleLabel::GetLabelSize() const
+{
+    return _labelSize;
 }
 
 void AppleLabel::mouseMoveEvent(QMouseEvent* pEvent)
