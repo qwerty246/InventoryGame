@@ -8,7 +8,8 @@ class InventoryTable : public QAbstractTableModel
 private:
     Q_OBJECT
 public:
-    InventoryTable(QObject* pParent = Q_NULLPTR) : QAbstractTableModel(pParent) {}
+    InventoryTable(int inventoryRow, int inventoryColumn,
+                   int typeRole, int countRole, QObject* pParent = Q_NULLPTR);
     virtual ~InventoryTable() Q_DECL_EQ_DEFAULT;
 public:
     //INFO Метод возвращает ширину инвентаря
@@ -31,4 +32,9 @@ public:
 public slots:
     //INFO Метод очищает базу данных и инвентарь
     void ResetTable();
+private:
+    const int _inventoryRow;
+    const int _inventoryColumn;
+    const int _typeRole;
+    const int _countRole;
 };

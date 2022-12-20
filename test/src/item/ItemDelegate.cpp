@@ -3,9 +3,14 @@
 
 #include <QPainter>
 
+ItemDelegate::ItemDelegate(int countRole, QObject* pParent) :
+    QStyledItemDelegate(pParent),
+    _countRole(countRole)
+{}
+
 void ItemDelegate::paint(QPainter* pPainter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    int itemCount = index.data(InventoryView::COUNT_ROLE).toInt();
+    int itemCount = index.data(_countRole).toInt();
     if (itemCount > 0)
     {
         QRect rect = option.rect;

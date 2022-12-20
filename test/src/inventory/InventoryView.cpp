@@ -10,7 +10,11 @@
 #include <QtMultimedia/QMediaPlayer>
 
 InventoryView::InventoryView(QWidget* pParent) :
-    QTableView(pParent)
+    QTableView(pParent),
+    _inventoryRow(3),
+    _inventoryColumn(3),
+    _typeRole(Qt::UserRole + 1),
+    _countRole(_typeRole + 1)
 {
     horizontalHeader()->setDefaultSectionSize(AppleLabel::LABEL_SIZE);
     verticalHeader()->setDefaultSectionSize(AppleLabel::LABEL_SIZE);
@@ -18,15 +22,35 @@ InventoryView::InventoryView(QWidget* pParent) :
     horizontalHeader()->hide();
     verticalHeader()->hide();
 
-    setItemDelegate(new ItemDelegate(this));
+    setItemDelegate(new ItemDelegate(_countRole, this));
 
     setDragEnabled(true);
     setAcceptDrops(true);
 
-    setFixedSize(AppleLabel::LABEL_SIZE * INVENTORY_ROW,
-                 AppleLabel::LABEL_SIZE * INVENTORY_COLUMN);
+    setFixedSize(AppleLabel::LABEL_SIZE * _inventoryRow,
+                 AppleLabel::LABEL_SIZE * _inventoryColumn);
 
     setFrameShape(QFrame::NoFrame);
+}
+
+int InventoryView::GetInventoryRow() const
+{
+    return _inventoryRow;
+}
+
+int InventoryView::GetInventoryColumn() const
+{
+    return _inventoryColumn;
+}
+
+int InventoryView::GetTypeRole() const
+{
+    return _typeRole;
+}
+
+int InventoryView::GetCountRole() const
+{
+    return _countRole;
 }
 
 void InventoryView::mousePressEvent(QMouseEvent* pEvent)
@@ -38,8 +62,8 @@ void InventoryView::mousePressEvent(QMouseEvent* pEvent)
         if (pModel)
         {
             if (pModel->setData(modeIndex,
-                                modeIndex.data(COUNT_ROLE).toInt() - 1,
-                                COUNT_ROLE))
+                                modeIndex.data(_countRole).toInt() - 1,
+                                _countRole))
             {
                 QMediaPlayer mediaPlayer;
                 mediaPlayer.setMedia(QUrl::fromLocalFile("biting.wav"));
@@ -82,36 +106,36 @@ void InventoryView::dropEvent(QDropEvent* pEvent)
     int itemType = static_cast<const ItemMimeData*>(pEvent->mimeData())->GetType();
     if (itemType)
     {
-        if (modelIndex.data(TYPE_ROLE).toInt() == itemType)
+        if (modelIndex.data(_typeRole).toInt() == itemType)
         {
-            int itemCount = modelIndex.data(COUNT_ROLE).toInt();
+            int itemCount = modelIndex.data(_countRole).toInt();
             if (pEvent->source() != this)
             {
-                pModel->setData(modelIndex, itemCount + 1, COUNT_ROLE);
+                pModel->setData(modelIndex, itemCount + 1, _countRole);
             }
             else
             {
                 pModel->setData(modelIndex,
-                                itemCount + _draggingModel.data(COUNT_ROLE).toInt(),
-                                COUNT_ROLE);
+                                itemCount + _draggingModel.data(_countRole).toInt(),
+                                _countRole);
 
-                pModel->setData(_draggingModel, 0, COUNT_ROLE);
+                pModel->setData(_draggingModel, 0, _countRole);
             }
         }
         else
         {
             if (pEvent->source() != this)
             {
-                pModel->setData(modelIndex, itemType, TYPE_ROLE);
+                pModel->setData(modelIndex, itemType, _typeRole);
             }
             else
             {
                 QList<QVariant> listItem;
-                listItem.append(_draggingModel.data(TYPE_ROLE).toInt());
-                listItem.append(_draggingModel.data(COUNT_ROLE).toInt());
-                if (pModel->setData(modelIndex, listItem, TYPE_ROLE))
+                listItem.append(_draggingModel.data(_typeRole).toInt());
+                listItem.append(_draggingModel.data(_countRole).toInt());
+                if (pModel->setData(modelIndex, listItem, _typeRole))
                 {
-                    pModel->setData(_draggingModel, 0, COUNT_ROLE);
+                    pModel->setData(_draggingModel, 0, _countRole);
                 }
             }
         }

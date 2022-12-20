@@ -5,8 +5,9 @@
 
 Window::Window(QWidget* pParent):
     QMainWindow(pParent),
-    _pInventoryTable(this),
     _pInventoryView(new InventoryView(this)),
+    _pInventoryTable(_pInventoryView->GetInventoryRow(), _pInventoryView->GetInventoryRow(),
+                     _pInventoryView->GetTypeRole(), _pInventoryView->GetCountRole(), this),
     _pAppleLabel(new AppleLabel(this)),
     _pButtonMainMenu(new QPushButton("Main menu", this)),
     _pMainMenu(Q_NULLPTR)

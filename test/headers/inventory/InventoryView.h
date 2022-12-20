@@ -9,13 +9,10 @@ public:
     InventoryView(QWidget* pParent = Q_NULLPTR);
     virtual ~InventoryView() Q_DECL_EQ_DEFAULT;
 public:
-    enum
-    {
-        INVENTORY_ROW = 3,
-        INVENTORY_COLUMN = 3,
-        TYPE_ROLE = Qt::UserRole + 1,
-        COUNT_ROLE = TYPE_ROLE + 1
-    };
+    int GetInventoryRow() const;
+    int GetInventoryColumn() const;
+    int GetTypeRole() const;
+    int GetCountRole() const;
 private:
     //INFO Метод воспроизводит звук откусывания яблока
     virtual void mousePressEvent(QMouseEvent* pEvent) Q_DECL_FINAL;
@@ -36,4 +33,8 @@ private:
     virtual void startDrag(Qt::DropActions supportedActions) Q_DECL_FINAL;
 private:
     QModelIndex _draggingModel;
+    const int _inventoryRow;
+    const int _inventoryColumn;
+    const int _typeRole;
+    const int _countRole;
 };

@@ -8,7 +8,7 @@ class ItemDelegate : public QStyledItemDelegate
 private:
     Q_OBJECT
 public:
-    ItemDelegate(QObject* pParent = Q_NULLPTR) : QStyledItemDelegate(pParent) {}
+    ItemDelegate(int countRole, QObject* pParent = Q_NULLPTR);
     virtual ~ItemDelegate() Q_DECL_EQ_DEFAULT;
 public:
     //INFO Переопределенный метод отрисовывает объекты
@@ -17,4 +17,6 @@ private:
     //INFO Метод возвращает либо оригинальное изображение, либо затемненное
     //INFO (в случае, когда инвентарь временно не доступен пользователю)
     QPixmap CreatePixmap(const QString& sData, QSize size = {0, 0}) const;
+private:
+    const int _countRole;
 };
